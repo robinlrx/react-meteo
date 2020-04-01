@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator headerMode="float" >
         <Stack.Screen
           name="Home"
           component={Home}
@@ -20,7 +20,14 @@ export default function App() {
             headerStyle: headerHome,
           }}
         />
-        <Stack.Screen name="Previsions" component={Previsions} />
+        <Stack.Screen name="Previsions" component={Previsions}
+          options={{
+            title: "Prévisions de la semaine",
+            headerStyle: headerPrevision,
+            headerTintColor: '#fff',
+          }}
+        
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -28,5 +35,8 @@ export default function App() {
 
 const headerHome = {
   backgroundColor: '#fe9a8b',
+}
 
+const headerPrevision = {
+  backgroundColor: '#16d9e3',
 }
