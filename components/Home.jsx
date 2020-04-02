@@ -5,16 +5,34 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 function Home({navigation}) {
 
-  let date = new Date();
+  //avoir la date du jour avec la fonction Date()
+    const date = new Date();
     const week = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
     const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-    // const day = week[date.getDay()];
     let fullDate = `${week[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`;
 
+    //avoir l'heure
+    const [hours, setHours] = useState('');
+    const [minutes, setMinutes] = useState('');
+
+      useEffect(() => {
+        setInterval(function heure(){
+            let heure = new Date().getHours().toString().padStart(2, '0');
+            setHours(heure);
+        }, 600);
+        setInterval(function minutes(){
+            let min = new Date().getUTCMinutes().toString().padStart(2, '0');
+            setMinutes(min);
+        }, 100);
+    });
+
+    let horloge = `${hours}:${minutes}`;
+  
     //api key et url : http://api.openweathermap.org/data/2.5/weather?q=Paris&appid=fc0b2a365b5012c84d8eeb72952effe2&lang=fr&units=metric
 
     const apiKey = 'fc0b2a365b5012c84d8eeb72952effe2';
-    const ville = 'Paris';
+    // const apiKey = 'adbb3ec5f92d77607ff77f1946193b0f';
+    const ville = 'Villiers-sur-Marne';
 
     const [city, setCity] = useState('');
     const [desc, setDesc] = useState('');
@@ -25,26 +43,28 @@ function Home({navigation}) {
         fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=${apiKey}&lang=fr&units=metric`)
       .then(response => response.json())
       .then(data => {
+        //pour avoir les informations voulu du JSON
         setCity(data.name)
-        setDesc(data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1)) 
-        setTemp(data.main.temp.toFixed(0))
+        setDesc(data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1)) //charAt(0).toUpperCase() : avoir la 1er lettre en capital, .slice(1) : regrouper avec la lettre du début
+        setTemp(data.main.temp.toFixed(0)) // toFixed(0) : mette la température en  valeur entière
         setIcon(data.weather[0].icon)
       })
     });
 
     return (
-        <LinearGradient style={styles.gradiant} colors={['#fe9a8b','#fd868c', '#f9748f','#f78ca0']}>
+        <LinearGradient style={styles.gradiant} colors={['#209ebb','#00273a']}>
             <View style={styles.container}>
-              <Text style={styles.time}>{fullDate}{"\n"}{city}</Text>
+              <Text style={styles.time}>{fullDate}{"\n"}{city}{"\n"}{horloge}</Text>
                 <Image style={styles.image} source={{uri: `http://openweathermap.org/img/wn/${icon}@2x.png`}}/>
                 <View>
                     <Text style={styles.intitule}>{desc}</Text>
                     <Text style={styles.degre}>{temp}°C</Text>
                 </View>
-                <LinearGradient style={styles.btn} colors={['#29323c', '#485563']}>
+                <View style={styles.btn}>
+                  {/* Aller vers la page Previsions.jsx */}
                 <Text style={styles.btnText} onPress={() => navigation.navigate('Previsions', {name: 'Previsions'})}>Voir les jours suivants</Text>
                 <Text style={styles.btnIcon}>🌡️</Text>
-                </LinearGradient>
+                </View>
             </View>
         </LinearGradient>
     );
@@ -90,10 +110,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#209ebb',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    elevation: 17,
     paddingTop: 15,
     paddingBottom: 15,
-    borderRadius: 10,
+    borderRadius: 50,
   },
   btnText:{
     color: 'white',

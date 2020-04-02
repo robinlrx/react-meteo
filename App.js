@@ -10,13 +10,14 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    // pour avoir la barre de nav et permettre de naviguer entre les pages
     <NavigationContainer>
       <Stack.Navigator headerMode="float" >
         <Stack.Screen
           name="Home"
           component={Home}
           options={{
-            title: 'Accueil',
+            title: '',
             headerStyle: headerHome,
           }}
         />
@@ -33,10 +34,14 @@ export default function App() {
   );
 }
 
+// style la bare de navigation de Home.jsx et Prevision.jsx
+
 const headerHome = {
-  backgroundColor: '#fe9a8b',
+  borderWidth: 0,
+  shadowColor: 'transparent',
+  height: 0,
 }
 
 const headerPrevision = {
-  backgroundColor: '#16d9e3',
+  backgroundColor: '#209ebb',
 }
