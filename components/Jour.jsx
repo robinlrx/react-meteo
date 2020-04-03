@@ -14,7 +14,7 @@ function Jour(props) {
     const [desc, setDesc] = useState('');
 
   useEffect(() => {
-
+    //pour avoir les informations voulu de l'API
     setDate(meteo.dt_txt.split(" ")[0]);
     setHeure(meteo.dt_txt.split(" ")[1]);
     setTemp(meteo.main.temp.toFixed(0));
@@ -29,6 +29,7 @@ function Jour(props) {
     let jour = week[day.getUTCDay()];
     let mois = months[day.getUTCMonth()];
     let chiffre = day.getUTCDate();
+    let fullDate = `${jour} ${chiffre} ${mois}`;
     
   return (
       <LinearGradient style={styles.previ} colors={['#f6d365','#fda085']}>
@@ -37,7 +38,7 @@ function Jour(props) {
             <Text style={styles.intitule}>{desc}</Text>
         </View>
         <View style={styles.description}>
-            <Text style={styles.jour}>{jour} {chiffre} {mois} {"\n"} à {heure.substring(0, heure.length - 3)}</Text>
+  <Text style={styles.jour}>{fullDate}{"\n"} à {heure.substring(0, heure.length - 3)}</Text>
             <Text style={styles.temp}>{temp}°C</Text>
         </View>
       </LinearGradient>
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
     },
     dessin:{
-      // marginRight: 20,
       alignItems: 'center',
       justifyContent: 'center',
       width: '50%',
@@ -78,8 +78,6 @@ const styles = StyleSheet.create({
     image:{
       width: 100,
       height: 75,
-    //   borderWidth: 4,
-    //   borderColor: "#20232a",
     },
     jour:{
       color: 'white',

@@ -7,7 +7,6 @@ function Previsions(props) {
 
   const apiKey = 'fc0b2a365b5012c84d8eeb72952effe2'
   // const apiKey = 'adbb3ec5f92d77607ff77f1946193b0f';
-  // const apiKey = '886268d885e2614466725dcf8b9589c5';
 
   const ville = 'Villiers-sur-Marne';
 
@@ -25,6 +24,7 @@ function Previsions(props) {
       <ScrollView style={styles.container}>
           <LinearGradient style={styles.gradiant} colors={['#209ebb','#00273a']}>
             <View style={styles.containerInfo}>
+              {/* Flatlist va permettre d'afficher  une liste (composant Jour) qui contient les prévisions pour les 5 jours suivantes*/}
             <FlatList
               data={meteo.list}
               renderItem={({item}) => {

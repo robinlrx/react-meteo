@@ -26,9 +26,8 @@ function Home({navigation}) {
         }, 100);
     });
 
+    //variable qui sera appelé dans le return
     let horloge = `${hours}:${minutes}`;
-  
-    //api key et url : http://api.openweathermap.org/data/2.5/weather?q=Paris&appid=fc0b2a365b5012c84d8eeb72952effe2&lang=fr&units=metric
 
     const apiKey = 'fc0b2a365b5012c84d8eeb72952effe2';
     // const apiKey = 'adbb3ec5f92d77607ff77f1946193b0f';
@@ -43,7 +42,7 @@ function Home({navigation}) {
         fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=${apiKey}&lang=fr&units=metric`)
       .then(response => response.json())
       .then(data => {
-        //pour avoir les informations voulu du JSON
+        //pour avoir les informations voulu de l'API
         setCity(data.name)
         setDesc(data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1)) //charAt(0).toUpperCase() : avoir la 1er lettre en capital, .slice(1) : regrouper avec la lettre du début
         setTemp(data.main.temp.toFixed(0)) // toFixed(0) : mette la température en  valeur entière
